@@ -43,6 +43,7 @@ app.get("/:crypto/:fiat/calc.js", function (req, res) {
 app.get("/:conv/:crypto/:fiat/:price/:use_json?", function (req, res) {
   const convs = ["get-crypto-price", "get-fiat-price"];
   const cryptos = ["monero", "bitcoin", "ethereum", "litecoin", "dash"];
+  const cryptos_short = { "xmr": "monero", "btc": "bitcoin", "eth": "ethereum", "ltc": "litecoin", "dash": "dash" }; 
   const fiats = ["usd", "eur", "czk", "btc"];
   if (convs.includes(req.params.conv)) {
     var conv = req.params.conv;
@@ -50,9 +51,9 @@ app.get("/:conv/:crypto/:fiat/:price/:use_json?", function (req, res) {
     var conv = "get-fiat-price";
   }
   if (cryptos.includes(req.params.crypto)) {
-    var crypto = req.params.crypto;
+    var crypto = cryptos_short[req.params.crypto];
   } else {
-    var crypto = "bitcoin";
+    var crypto = cryptos_short["btc"];
   }
   if (fiats.includes(req.params.fiat)) {
     var fiat = req.params.fiat;
@@ -86,30 +87,26 @@ app.get("/:conv/:crypto/:fiat/:price/:use_json?", function (req, res) {
       const crypto_json = JSON.parse(body);
       var crypto_rate = crypto_json[crypto][fiat];
       if (conv == "get-crypto-price") {
-        var calc_amount =
-          parseFloat(req.params.price) / parseFloat(crypto_rate);
+        var calc_amount = parseFloat(req.params.price) / parseFloat(crypto_rate);
         var conversion_units = "crypto";
       } else if (conv == "get-fiat-price") {
-        {
-          var calc_amount =
-            parseFloat(crypto_rate) * parseFloat(req.params.price);
-          var conversion_units = "fiat";
-        }
-        if (use_jsonp) {
-          res.send('callback({"res": "' + calc_amount + '"})');
-        } else if (use_json) {
-          res.send(JSON.stringify({ res: calc_amount }));
-        } else {
-          res.send("" + calc_amount);
-        }
+        var calc_amount = parseFloat(crypto_rate) * parseFloat(req.params.price);
+        var conversion_units = "fiat";
+      }
+      if (use_jsonp) {
+        res.send('callback({"res": "' + calc_amount + '"})');
+      } else if (use_json) {
+        res.send(JSON.stringify({ res: calc_amount }));
       } else {
-        if (use_jsonp) {
-          res.send('callback({"res": "error"})');
-        } else if (use_json) {
-          res.send(JSON.stringify({ res: "error" }));
-        } else {
-          res.send("Error");
-        }
+        res.send("" + calc_amount);
+      }
+    } else {
+      if (use_jsonp) {
+        res.send('callback({"res": "error"})');
+      } else if (use_json) {
+        res.send(JSON.stringify({ res: "error" }));
+      } else {
+        res.send("Error");
       }
     }
   });
