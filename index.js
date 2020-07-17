@@ -42,7 +42,7 @@ app.get("/:crypto/:fiat/calc.js", function (req, res) {
 
 app.get("/:conv/:crypto/:fiat/:price/:use_json?", function (req, res) {
   const convs = ["get-crypto-price", "get-fiat-price"];
-  const cryptos = ["monero", "bitcoin", "ethereum", "litecoin", "dash"];
+  const cryptos = ["xmr", "btc", "eth", "ltc", "dash"];
   const cryptos_short = { "xmr": "monero", "btc": "bitcoin", "eth": "ethereum", "ltc": "litecoin", "dash": "dash" }; 
   const fiats = ["usd", "eur", "czk", "btc"];
   if (convs.includes(req.params.conv)) {
@@ -52,7 +52,6 @@ app.get("/:conv/:crypto/:fiat/:price/:use_json?", function (req, res) {
   }
   if (cryptos.includes(req.params.crypto)) {
     var crypto = cryptos_short[req.params.crypto];
-    console.log(crypto);
   } else {
     var crypto = "bitcoin";
   }
@@ -84,9 +83,8 @@ app.get("/:conv/:crypto/:fiat/:price/:use_json?", function (req, res) {
     } else {
       res.set("Content-Type", "text/html");
     }
-    if (!error && response.statusCode === 200) {
+    if (!error && response.statusCode === 200 && JSON.parse(body)) {
       const crypto_json = JSON.parse(body);
-      console.log(crypto_json);
       var crypto_rate = crypto_json[crypto][fiat];
       if (conv == "get-crypto-price") {
         var calc_amount = parseFloat(req.params.price) / parseFloat(crypto_rate);
