@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Crypto exchange rate calculator. Check the prices of Bitcoin, Monero, Ethereum, Litecoin and Dash. Realtime updates." name="description">
+  <meta content="crypto, cryptocurrency, currency conversion, converter, calculator, bitcoin price, satoshi price, monero price, ethereum price, bitcoin to usd, monero to usd, preev, monero preev, ethereum preev, live converter, live crypto prices, exchange rate, exchange rates, bitcoin cost, monero cost, ethereum cost, price updates" name="keywords">
+  <link href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACSU4sIklOL/JJTi/ySU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4sIAAAAAAAAAAAAAAAAklOL/JJTiPCSU4jwklOL/JJTiPCSU4jwklOL/JJTiPCSU4jwklOL/JJTiPCSU4jwklOL/AAAAAAAAAAAAAAAAJJTi/ySU4jwklOI8JJTi/ySU4jwklOI8JJTi/ySU4jwklOI8JJTi/wAAAAAAAAAAJJTi/wAAAAAAAAAAAAAAACSU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4v8AAAAAAAAAACSU4v8AAAAAAAAAAAAAAAAklOL/JJTiPCSU4jwklOL/JJTiPCSU4jwklOL/JJTiPCSU4jwklOL/AAAAAAAAAAAklOL/AAAAAAAAAAAAAAAAJJTi/ySU4jwklOI8JJTi/ySU4jwklOI8JJTi/ySU4jwklOI8JJTi/ySU4jwklOI8JJTi/wAAAAAAAAAAAAAAACSU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4v8AAAAAAAAAAAAAAAAklOL/JJTiPCSU4jwklOL/JJTiPCSU4jwklOL/JJTiPCSU4jwklOL/JJTiPCSU4jwklOL/AAAAAAAAAAAAAAAAJJTi/ySU4jwklOI8JJTi/ySU4jwklOI8JJTi/ySU4jwklOI8JJTi/ySU4jwklOI8JJTi/wAAAAAAAAAAAAAAACSU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4v8AAAAAAAAAAAAAAAAklOL/SsOLDgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAErDiw8klOL/AAAAAAAAAAAAAAAAJJTi/wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJJTi/wAAAAAAAAAAAAAAACSU4v9Kw4sPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASsOLDySU4v8AAAAAAAAAAAAAAAAklOLCJJTi/ySU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4v8klOL/JJTi/ySU4v8klOLCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAIADAAC22wAAttsAAIAbAAC22wAAttsAAIADAAC22wAAttsAAIADAAC/+wAAv/sAAL/7AACAAwAA//8AAA==" rel="icon" type="image/x-icon" />
+  <style>
+    body {
+      background-color: rgb(247, 255, 247);
+      color: rgb(26, 83, 92);
+      font-family: "Roboto", sans-serif;
+      font-size: 16px;
+    }
+
+    #content {
+      min-height: 95vh;
+    }
+
+    #content,
+    #form,
+    #info {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    .break {
+      flex-basis: 100%;
+      height: 0;
+    }
+
+    #form div,
+    #info div {
+      padding: 1em;
+      margin: 0.5em;
+    }
+
+    div,
+    select,
+    input,
+    button,
+    span,
+    p,
+    a {
+      box-sizing: border-box !important;
+    }
+
+    select,
+    input,
+    button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+
+    select,
+    input[type=submit],
+    button {
+      background-color: rgb(78, 205, 196);
+      color: rgb(247, 255, 247);
+    }
+
+    select,
+    input,
+    button {
+      border: 2px solid rgba(78, 205, 196, 0.5);
+      border-radius: 0.5em;
+      padding: 0.5em;
+      font-size: 2em;
+      max-width: 99%;
+    }
+
+    input[type=text] {
+      background-color: rgb(247, 255, 247);
+      color: rgb(26, 83, 92);
+    }
+
+    a {
+      color: rgb(78, 205, 196);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    #error,
+    #footer {
+      display: block;
+      position: fixed;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      padding: 0.5em 0;
+      font-weight: bold;
+      background-color: rgb(247, 255, 247);
+    }
+
+    #error {
+      top: 0;
+    }
+
+    #footer {
+      font-size: 0.8em;
+      bottom: 0;
+    }
+
+    .blue {
+      color: rgb(78, 205, 196);
+    }
+
+    .red {
+      color: rgb(255, 107, 107);
+    }
+    
+    .green {
+      color: rgb(0, 229, 0);
+    }
+
+    .mono {
+      background-color: rgb(26, 83, 92);
+      color: rgb(200, 244, 99);
+      font-family: monospace;
+      padding: 4px;
+      max-width: 100%;
+      word-break: break-all;
+    }
+
+    @media (max-width: 767px) {
+
+      select,
+      input,
+      button {
+        max-width: 270px;
+        margin: 5px 0px;
+      }
+
+      #container-crypto,
+      #container-fiat {
+        max-width: 90%
+      }
+
+      body {
+        padding: 20px 0px;
+      }
+    }
+  </style>
+  <title>Crypto Exchange Rate Live Calculator</title>
+</head>
+
+<body>
+  <div id="error" class="red"></div>
+  <div id="footer">
+    <p>Support with BTC <span class="mono">1LNsTS6S4JCkCFT2XhTXwD1b7dmCjFfb1N</span></p>
+    <p>XMR <span class="mono">45M19iRocc8Vquq2BehSXEF8HmMwznWtMK1ucQewQR6zYcbL21gwkjKXkxRhbgHE3FaCz2974eQ5KJvT8Uj8XyWe24R7KzH</span></p>
+  </div>
+  <div id="content">
+    <div id="form">
+      <div id="container-crypto">
+        <input id="calc_crypto" onkeyup="calculate_rate('calc_crypto')" placeholder="Crypto" type="text" value="0"> <select id="crypto" onchange="calculate_rate('calc_crypto')">
+          <option selected value="bitcoin">
+            BTC
+          </option>
+          <option value="satoshi">
+            Satoshi
+          </option>
+          <option value="monero">
+            XMR
+          </option>
+          <option value="ethereum">
+            ETH
+          </option>
+          <option value="litecoin">
+            LTC
+          </option>
+          <option value="dash">
+            DASH
+          </option>
+        </select>
+      </div>
+      <div id="container-fiat">
+        <input id="calc_fiat" onkeyup="calculate_rate('calc_fiat')" placeholder="Fiat" type="text" value="0"> <select id="fiat" onchange="calculate_rate('calc_fiat')">
+          <option selected value="usd">
+            USD
+          </option>
+          <option value="eur">
+            EUR
+          </option>
+          <option value="czk">
+            CZK
+          </option>
+          <option value="btc">
+            BTC
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="break"></div>
+    <div id="info">
+      <div>
+        24 hour change: <span id="daily_change">N/A</span>
+      </div>
+      <div>
+        Exchange rates from <a href="https://www.coingecko.com/">CoinGecko</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    function getJSONP(url, success) {
+      var script = document.createElement('script'),
+        head = document.getElementsByTagName('head')[0] || document.documentElement;
+      window['callback'] = function(data) {
+        head.removeChild(script);
+        success && success(data);
+      };
+      script.src = url;
+      head.appendChild(script);
+    }
+
+    function calculate_rate(changed) {
+      const valid_cryptos = ['monero', 'bitcoin', 'satoshi', 'ethereum', 'litecoin', 'dash'];
+      const valid_fiats = ['usd', 'eur', 'czk', 'btc'];
+      var calc_crypto = document.getElementById('calc_crypto').value;
+      var calc_fiat = document.getElementById('calc_fiat').value;
+      var crypto = document.getElementById('crypto').value;
+      if (!valid_cryptos.includes(crypto)) {
+        var crypto = 'bitcoin';
+      }
+      if (crypto == 'satoshi') {
+        var crypto = 'bitcoin';
+        var is_satoshi = true;
+      } else {
+        var is_satoshi = false;
+      }
+      var crypto_uppercase = crypto[0].toUpperCase() + crypto.substr(1);
+      var fiat = document.getElementById('fiat').value;
+      if (!valid_fiats.includes(fiat)) {
+        var fiat = 'usd';
+      }
+      var title = crypto_uppercase + ' Exchange Rate Live Calculator';
+      getJSONP('https://crypto-c.herokuapp.com/' + crypto + '/' + fiat + '/calc.js', function(data) {
+        var calc_crypto_rate = data;
+        if (!calc_crypto_rate) {
+          var error = true;
+        } else {
+          var current_rate = calc_crypto_rate[crypto][fiat];
+          if ((calc_fiat > 0) || (calc_crypto > 0)) {
+            if (isNaN(current_rate)) {
+              var error = true;
+            } else {
+              if (changed == 'fiat') {
+                var new_crypto_price = parseFloat(calc_fiat) / parseFloat(current_rate);
+                var error = isNaN(new_crypto_price);
+                if (!error) {
+                  new_crypto_price = (new_crypto_price >= 0.00000001) ? new_crypto_price.toFixed(8) : new_crypto_price;
+                  if (is_satoshi) {
+                    new_crypto_price = new_crypto_price * 100000000;
+                  }
+                  document.getElementById('calc_crypto').value = new_crypto_price;
+                  document.title = parseFloat(fiat).toFixed(2) + ' ' + fiat.toUpperCase() + ' | ' + title;
+                }
+              } else {
+                var new_fiat_price = parseFloat(current_rate) * parseFloat(calc_crypto);
+                var error = isNaN(new_fiat_price);
+                if (!error) {
+                  new_fiat_price = (new_fiat_price >= 0.01) ? new_fiat_price.toFixed(2) : new_fiat_price;
+                  if (is_satoshi) {
+                    new_fiat_price = new_fiat_price * 0.00000001;
+                  }
+                  document.getElementById('calc_fiat').value = new_fiat_price;
+                  document.title = new_fiat_price + ' ' + fiat.toUpperCase() + ' | ' + title;
+                }
+              }
+              var daily_change = parseFloat(calc_crypto_rate[crypto][fiat + '_24h_change']);
+              if (daily_change >= 0) {
+                document.getElementById('daily_change').innerHTML = "+" + daily_change.toFixed(2) + "%";
+                document.getElementById('daily_change').classList.remove("red");
+                document.getElementById('daily_change').classList.add("green");
+              } else {
+                document.getElementById('daily_change').innerHTML = daily_change.toFixed(2) + "%";
+                document.getElementById('daily_change').classList.remove("green");
+                document.getElementById('daily_change').classList.add("red");
+              }
+              document.getElementById('error').innerHTML = '';
+            }
+          }
+        }
+        if (error) {
+          document.getElementById('calc_crypto').value = 0;
+          document.getElementById('calc_fiat').value = 0;
+          document.getElementById('daily_change').innerHTML = 'N/A';
+          document.getElementById('error').innerHTML = 'Please refresh or try again later.';
+          document.title = title;
+        }
+      });
+    }
+
+    function init_price() {
+      document.getElementById('calc_crypto').value = 1;
+      calculate_rate('calc_crypto');
+    }
+    window.onload = function() {
+      init_price();
+    };
+    window.setInterval(function() {
+      calculate_rate('update');
+    }, 60000);
+  </script>
+</body>
+
+</html>
