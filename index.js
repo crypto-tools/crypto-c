@@ -52,8 +52,9 @@ app.get("/:conv/:crypto/:fiat/:price/:use_json?", function (req, res) {
   }
   if (cryptos.includes(req.params.crypto)) {
     var crypto = cryptos_short[req.params.crypto];
+    console.log(crypto);
   } else {
-    var crypto = cryptos_short["btc"];
+    var crypto = "bitcoin";
   }
   if (fiats.includes(req.params.fiat)) {
     var fiat = req.params.fiat;
@@ -85,6 +86,7 @@ app.get("/:conv/:crypto/:fiat/:price/:use_json?", function (req, res) {
     }
     if (!error && response.statusCode === 200) {
       const crypto_json = JSON.parse(body);
+      console.log(crypto_json);
       var crypto_rate = crypto_json[crypto][fiat];
       if (conv == "get-crypto-price") {
         var calc_amount = parseFloat(req.params.price) / parseFloat(crypto_rate);
