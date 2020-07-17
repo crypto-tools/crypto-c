@@ -166,7 +166,7 @@
   <div id="content">
     <div id="form">
       <div id="container-crypto">
-        <input id="calc_crypto" onkeyup="calculate_rate('calc_crypto')" placeholder="Crypto" type="text" value="0"> <select id="crypto" onchange="calculate_rate('calc_crypto')">
+        <input id="calc_crypto" onkeyup="calculate_rate('change_crypto')" placeholder="Crypto" type="text" value="0"> <select id="crypto" onchange="calculate_rate('change_crypto')">
           <option selected value="bitcoin">
             BTC
           </option>
@@ -188,7 +188,7 @@
         </select>
       </div>
       <div id="container-fiat">
-        <input id="calc_fiat" onkeyup="calculate_rate('calc_fiat')" placeholder="Fiat" type="text" value="0"> <select id="fiat" onchange="calculate_rate('calc_fiat')">
+        <input id="calc_fiat" onkeyup="calculate_rate('change_fiat')" placeholder="Fiat" type="text" value="0"> <select id="fiat" onchange="calculate_rate('change_fiat')">
           <option selected value="usd">
             USD
           </option>
@@ -257,7 +257,7 @@
             if (isNaN(current_rate)) {
               var error = true;
             } else {
-              if (changed == 'fiat') {
+              if (changed == 'change_fiat') {
                 var new_crypto_price = parseFloat(calc_fiat) / parseFloat(current_rate);
                 var error = isNaN(new_crypto_price);
                 if (!error) {
@@ -268,7 +268,7 @@
                   document.getElementById('calc_crypto').value = new_crypto_price;
                   document.title = parseFloat(fiat).toFixed(2) + ' ' + fiat.toUpperCase() + ' | ' + title;
                 }
-              } else {
+              } else if (changed == 'change_crypto') {
                 var new_fiat_price = parseFloat(current_rate) * parseFloat(calc_crypto);
                 var error = isNaN(new_fiat_price);
                 if (!error) {
