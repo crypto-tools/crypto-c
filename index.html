@@ -302,7 +302,11 @@
                 var new_fiat_price = parseFloat(current_rate) * parseFloat(calc_crypto);
                 var error = isNaN(new_fiat_price);
                 if (!error) {
-                  new_fiat_price = (new_fiat_price >= 0.01) ? new_fiat_price.toFixed(2) : new_fiat_price;
+                  if (fiat == 'btc') {
+                    new_fiat_price = (new_fiat_price >= 0.00000001) ? new_fiat_price.toFixed(8) : new_fiat_price;
+                  } else {
+                    new_fiat_price = (new_fiat_price >= 0.01) ? new_fiat_price.toFixed(2) : new_fiat_price;
+                  }
                   if (is_satoshi) {
                     new_fiat_price = new_fiat_price * 0.00000001;
                   }
@@ -342,7 +346,7 @@
       init_price();
     };
     window.setInterval(function() {
-      calculate_rate('update');
+      calculate_rate('change_crypto');
     }, 60000);
   </script>
 </body>
